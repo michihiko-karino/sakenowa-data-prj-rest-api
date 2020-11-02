@@ -1,6 +1,15 @@
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { AreaEntity } from "./area.entity";
-import { BrandEntity } from "./brand.entity";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { AreaEntity } from './area.entity';
+import { BrandEntity } from './brand.entity';
 
 @Entity({
   name: 'brand_score',
@@ -21,6 +30,12 @@ export class BrandScoreEntity {
   @Column('double')
   @Index()
   readonly score!: number;
+
+  @Column('int', { nullable: true })
+  readonly allRank?: number;
+
+  @Column('int', { nullable: true })
+  readonly areaRank?: number;
 
   @OneToOne(() => BrandEntity, (brand) => brand.id)
   @JoinColumn()

@@ -1,12 +1,19 @@
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 import { AreaEntity } from './area.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { BrandEntity } from "./brand.entity";
+import { BrandEntity } from './brand.entity';
 
 @Entity({
   name: 'brewery',
 })
 export class BreweryEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   readonly id!: number;
 
   @CreateDateColumn({ select: false })
@@ -15,7 +22,7 @@ export class BreweryEntity {
   @Column()
   readonly name!: string;
 
-  @OneToMany(() => BrandEntity, (brand) => brand.id)
+  @OneToMany(() => BrandEntity, (brand) => brand.brewery)
   readonly brands!: BrandEntity[];
 
   @ManyToOne(() => AreaEntity, (area) => area.id)

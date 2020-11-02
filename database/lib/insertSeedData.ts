@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 
+// 実行前にmy.cnfのlocal_infileに関するコメント行をすべて外してからdocker-composeを再起動すること
 createConnection().then(async connection => {
 
   // 外部キー制約を外す
@@ -65,11 +66,13 @@ createConnection().then(async connection => {
     INTO TABLE brand_score
     FIELDS TERMINATED BY ',' ENCLOSED BY '"'
     LINES TERMINATED BY '\n' IGNORE 1 LINES
-    (@yearMonth,@areaId,@score,@brandId)
+    (@yearMonth,@areaId,@score,@allRank,@areaRank,@brandId)
     SET
       yearMonth = @yearMonth,
       areaId = @areaId,
       score = @score,
+      allRank = nullif(@allRank, ''),
+      areaRank = @areaRank,
       brandId = @brandId;
   `).then(reason => console.table(reason));
   console.log("FINISH brand_score");

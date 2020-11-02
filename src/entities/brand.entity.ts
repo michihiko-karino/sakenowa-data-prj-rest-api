@@ -1,12 +1,22 @@
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { BreweryEntity } from "./brewery.entity";
-import { FlavorTagEntity } from "./flavorTag.entity";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
+import { BreweryEntity } from './brewery.entity';
+import { FlavorChartEntity } from './flavorChart.entity';
+import { FlavorTagEntity } from './flavorTag.entity';
 
 @Entity({
   name: 'brand',
 })
 export class BrandEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   readonly id!: number;
 
   @CreateDateColumn({ select: false })
@@ -15,7 +25,7 @@ export class BrandEntity {
   @Column()
   readonly name!: string;
 
-  @ManyToOne(() => BreweryEntity, (brewery) => brewery.id)
+  @ManyToOne(() => BreweryEntity, (brewery) => brewery.brands)
   readonly brewery?: BreweryEntity;
 
   @ManyToMany(() => FlavorTagEntity)
@@ -31,4 +41,7 @@ export class BrandEntity {
     },
   })
   readonly flavorTags: FlavorTagEntity[];
+
+  @OneToOne(() => FlavorChartEntity, (flavorChart) => flavorChart.brand)
+  readonly flavorChart!: FlavorChartEntity;
 }

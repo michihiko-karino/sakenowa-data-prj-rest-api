@@ -1,7 +1,8 @@
-import fetch from 'node-fetch';
 import { createObjectCsvWriter } from 'csv-writer';
+import fetch from 'node-fetch';
 
 type SakaenowaResponse = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   [key: string]: Object[];
 };
 
@@ -66,6 +67,8 @@ const writeBrandScoreCSV = async () => {
       {id: 'yearMonth', title: 'YEAR_MONTH'},
       {id: 'areaId', title: 'AREA_ID'},
       {id: 'score', title: 'SCORE'},
+      {id: 'allRank', title: 'ALL_RANK'},
+      {id: 'areaRank', title: 'AREA_RANK'},
       {id: 'brandId', title: 'BRAND_ID'},
     ],
   });
@@ -80,9 +83,17 @@ const writeBrandScoreCSV = async () => {
         yearMonth,
         areaId,
         score: r.score,
+        allRank: null,
+        areaRank: r.rank,
         brandId: r.brandId,
       });
     });
+  });
+
+  const overall = data.overall as { rank: number, score: number, brandId: number }[];
+  overall.forEach((i) => {
+    const found = writeData.find(datum => datum.brandId === i.brandId);
+    found.allRank = i.rank;
   });
 
   await csvWriter.writeRecords(writeData);

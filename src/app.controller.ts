@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, HttpCode } from '@nestjs/common';
+import { ApiExcludeEndpoint } from '@nestjs/swagger/dist/decorators/api-exclude-endpoint.decorator';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('/favicon.ico')
+  @ApiExcludeEndpoint()
+  @HttpCode(204)
+  favicon(): void {
+    return;
   }
 }

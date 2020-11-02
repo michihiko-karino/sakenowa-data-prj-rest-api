@@ -1,10 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({
   name: 'flavor_tag',
 })
 export class FlavorTagEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   readonly id!: number;
 
   @CreateDateColumn({ select: false })

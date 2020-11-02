@@ -1,10 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({
   name: 'area',
 })
 export class AreaEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   readonly id!: number;
 
   @CreateDateColumn({ select: false })
