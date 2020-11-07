@@ -1,5 +1,7 @@
 import { Controller, Get, Query, BadRequestException } from '@nestjs/common';
+import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
 import { BrandScoreEntity } from 'src/entities/brandScore.entity';
+import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { SearchQueryDTO } from './dto/searchQuery.dto';
 import { RankingService } from './ranking.service';
 
@@ -12,6 +14,7 @@ export class RankingController {
   }
 
   @Get()
+  @UseInterceptors(LicenseInterceptor)
   async all(@Query() query: SearchQueryDTO): Promise<BrandScoreEntity[]> {
     const yearMonth =
       query.yearMonth || (await this.#rankingService.getNewestYearMonth());
