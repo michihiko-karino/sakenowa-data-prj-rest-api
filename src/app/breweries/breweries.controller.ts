@@ -2,17 +2,24 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { IdAndQuery } from 'src/decorators/idAndQuery';
-import { LicensedDTO, LicensedDTODecorator } from 'src/decorators/licensedDTO.decorator';
-import { BreweryDetail, BreweryList, BreweryEntity } from 'src/entities/brewery.entity';
+import {
+  LicensedDTO,
+  LicensedDTODecorator,
+} from 'src/decorators/licensedDTO.decorator';
+import {
+  BreweryDetail,
+  BreweryList,
+  BreweryEntity,
+} from 'src/entities/brewery.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { ValidateAndTransformPipe } from 'src/pipes/validateAndTransformPipe';
 import { BreweriesService } from './breweries.service';
-import { GetQueryDTO,GetQuerySchema } from './dto/getQuery.dto';
+import { GetQueryDTO, GetQuerySchema } from './dto/getQuery.dto';
 import { SearchQueryDTO, SearchQuerySchema } from './dto/searchQuery.dto';
 
 @ApiTags('breweries')
 @Controller('breweries')
-@ApiExtraModels(LicensedDTO, BreweryDetail,BreweryList)
+@ApiExtraModels(LicensedDTO, BreweryDetail, BreweryList)
 export class BreweriesController {
   readonly #breweriesService: BreweriesService;
 

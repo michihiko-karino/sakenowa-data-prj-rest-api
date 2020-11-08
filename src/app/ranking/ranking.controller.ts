@@ -1,7 +1,10 @@
 import { Controller, Get, Query, BadRequestException } from '@nestjs/common';
 import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
-import { LicensedDTO, LicensedDTODecorator } from 'src/decorators/licensedDTO.decorator';
+import {
+  LicensedDTO,
+  LicensedDTODecorator,
+} from 'src/decorators/licensedDTO.decorator';
 import { BrandScore, BrandScoreEntity } from 'src/entities/brandScore.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { SearchQueryDTO, SearchQuerySchema } from './dto/searchQuery.dto';

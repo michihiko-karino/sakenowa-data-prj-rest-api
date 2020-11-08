@@ -15,7 +15,7 @@ export class FlavorTagEntity {
   readonly tag!: string;
 }
 
-export class FlavorTag extends FlavorTagEntity{
+export class FlavorTag extends FlavorTagEntity {
   @ApiProperty({ example: '2' })
   id: number;
 

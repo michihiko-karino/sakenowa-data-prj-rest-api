@@ -2,7 +2,10 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { IdAndQuery } from 'src/decorators/idAndQuery';
-import { LicensedDTO, LicensedDTODecorator } from 'src/decorators/licensedDTO.decorator';
+import {
+  LicensedDTO,
+  LicensedDTODecorator,
+} from 'src/decorators/licensedDTO.decorator';
 import { BrandList, BrandEntity, BrandDetail } from 'src/entities/brand.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { ValidateAndTransformPipe } from 'src/pipes/validateAndTransformPipe';
@@ -12,7 +15,7 @@ import { SearchQueryDTO, SearchQuerySchema } from './dto/searchQuery.dto';
 
 @ApiTags('brands')
 @Controller('brands')
-@ApiExtraModels(LicensedDTO, BrandDetail,BrandList)
+@ApiExtraModels(LicensedDTO, BrandDetail, BrandList)
 export class BrandsController {
   readonly #brandsService: BrandsService;
 

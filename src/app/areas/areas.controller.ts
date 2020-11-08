@@ -2,7 +2,10 @@ import { Controller, Get } from '@nestjs/common';
 import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LicensedDTO, LicensedDTODecorator } from 'src/decorators/licensedDTO.decorator';
+import {
+  LicensedDTO,
+  LicensedDTODecorator,
+} from 'src/decorators/licensedDTO.decorator';
 import { Area, AreaEntity } from 'src/entities/area.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { Repository } from 'typeorm';
