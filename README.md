@@ -38,10 +38,11 @@ npx ts-node database/lib/insertSeedData.ts
 ### 3. REST APIサーバ起動
 
 ```sh
+npm run start
 ```
 
 ## 補足
 
 - API定義書の確認方法
-
+サーバを起動したあと、`/swagger`へアクセスするとSwaggerUIを確認できる
 
