@@ -7,8 +7,8 @@ import { BrandList, BrandEntity, BrandDetail } from 'src/entities/brand.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { ValidateAndTransformPipe } from 'src/pipes/validateAndTransformPipe';
 import { BrandsService } from './brands.service';
-import { GetQueryDTO } from './dto/getQuery.dto';
-import { SearchQueryDTO } from './dto/searchQuery.dto';
+import { GetQueryDTO, GetQuerySchema } from './dto/getQuery.dto';
+import { SearchQueryDTO, SearchQuerySchema } from './dto/searchQuery.dto';
 
 @ApiTags('brands')
 @Controller('brands')
@@ -21,6 +21,7 @@ export class BrandsController {
   }
 
   @Get()
+  @SearchQuerySchema()
   @LicensedDTODecorator([BrandList])
   @UseInterceptors(LicenseInterceptor)
   async findAll(@Query() query: SearchQueryDTO): Promise<BrandEntity[]> {
@@ -28,6 +29,7 @@ export class BrandsController {
   }
 
   @Get(':id')
+  @GetQuerySchema()
   @LicensedDTODecorator(BrandDetail)
   @UseInterceptors(LicenseInterceptor)
   async findOne(

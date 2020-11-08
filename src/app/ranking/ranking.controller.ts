@@ -4,7 +4,7 @@ import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { LicensedDTO, LicensedDTODecorator } from 'src/decorators/licensedDTO.decorator';
 import { BrandScore, BrandScoreEntity } from 'src/entities/brandScore.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
-import { SearchQueryDTO } from './dto/searchQuery.dto';
+import { SearchQueryDTO, SearchQuerySchema } from './dto/searchQuery.dto';
 import { RankingService } from './ranking.service';
 
 @ApiTags('ranking')
@@ -18,7 +18,7 @@ export class RankingController {
   }
 
   @Get()
-  // @SearchQuerySchema()
+  @SearchQuerySchema()
   @LicensedDTODecorator([BrandScore])
   @UseInterceptors(LicenseInterceptor)
   async all(@Query() query: SearchQueryDTO): Promise<BrandScoreEntity[]> {

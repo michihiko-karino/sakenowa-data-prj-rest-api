@@ -7,8 +7,8 @@ import { BreweryDetail, BreweryList, BreweryEntity } from 'src/entities/brewery.
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { ValidateAndTransformPipe } from 'src/pipes/validateAndTransformPipe';
 import { BreweriesService } from './breweries.service';
-import { GetQueryDTO } from './dto/getQuery.dto';
-import { SearchQueryDTO } from './dto/searchQuery.dto';
+import { GetQueryDTO,GetQuerySchema } from './dto/getQuery.dto';
+import { SearchQueryDTO, SearchQuerySchema } from './dto/searchQuery.dto';
 
 @ApiTags('breweries')
 @Controller('breweries')
@@ -21,6 +21,7 @@ export class BreweriesController {
   }
 
   @Get()
+  @SearchQuerySchema()
   @LicensedDTODecorator([BreweryList])
   @UseInterceptors(LicenseInterceptor)
   async findAll(@Query() query: SearchQueryDTO): Promise<BreweryEntity[]> {
@@ -28,6 +29,7 @@ export class BreweriesController {
   }
 
   @Get(':id')
+  @GetQuerySchema()
   @LicensedDTODecorator(BreweryDetail)
   @UseInterceptors(LicenseInterceptor)
   async findOne(
