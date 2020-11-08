@@ -1,11 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
 import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
+import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AreaEntity } from 'src/entities/area.entity';
+import { LicensedDTO, LicensedDTODecorator } from 'src/decorators/licensedDTO.decorator';
+import { Area, AreaEntity } from 'src/entities/area.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { Repository } from 'typeorm';
 
+@ApiTags('areas')
 @Controller('areas')
+@ApiExtraModels(LicensedDTO, Area)
 export class AreasController {
   readonly #AreaRepository: Repository<AreaEntity>;
 
@@ -17,6 +21,7 @@ export class AreasController {
   }
 
   @Get()
+  @LicensedDTODecorator([Area])
   @UseInterceptors(LicenseInterceptor)
   async list(): Promise<AreaEntity[]> {
     return this.#AreaRepository.find();

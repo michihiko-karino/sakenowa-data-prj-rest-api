@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -8,9 +9,9 @@ import {
   OneToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { BreweryEntity } from './brewery.entity';
-import { FlavorChartEntity } from './flavorChart.entity';
-import { FlavorTagEntity } from './flavorTag.entity';
+import { BreweryEntity, OnlyBrewery } from './brewery.entity';
+import { FlavorChart, FlavorChartEntity } from './flavorChart.entity';
+import { FlavorTag, FlavorTagEntity } from './flavorTag.entity';
 
 @Entity({
   name: 'brand',
@@ -44,4 +45,25 @@ export class BrandEntity {
 
   @OneToOne(() => FlavorChartEntity, (flavorChart) => flavorChart.brand)
   readonly flavorChart!: FlavorChartEntity;
+}
+
+export class OnlyBrand extends BrandEntity {
+  @ApiProperty({ example: '109' })
+  id: number;
+
+  @ApiProperty({ example: '新政' })
+  name: string;
+}
+
+export class BrandList extends OnlyBrand {
+  @ApiProperty({ type: OnlyBrewery })
+  brewery: BreweryEntity;
+}
+
+export class BrandDetail extends BrandList {
+  @ApiProperty({ type: FlavorTag })
+  flavorTags: FlavorTagEntity[];
+
+  @ApiProperty({ type: FlavorChart })
+  flavorChart: FlavorChartEntity;
 }

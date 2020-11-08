@@ -1,6 +1,7 @@
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as morgan from 'morgan';
 import { AppModule } from './app.module';
 import { classValidatorOption } from './config/classValidatorOption';
@@ -40,6 +41,14 @@ async function bootstrap() {
 
   // Starts listening for shutdown hooks
   app.enableShutdownHooks();
+
+  const options = new DocumentBuilder()
+    .setTitle('Sakenowa REST API')
+    .setDescription('Sakenowa REST API description')
+    .setVersion('0.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(
     Number(configService.get<string>('port')) || 3000,

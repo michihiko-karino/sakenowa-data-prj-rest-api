@@ -1,11 +1,15 @@
 import { Controller, Get, Query, BadRequestException } from '@nestjs/common';
 import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
-import { BrandScoreEntity } from 'src/entities/brandScore.entity';
+import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
+import { LicensedDTO, LicensedDTODecorator } from 'src/decorators/licensedDTO.decorator';
+import { BrandScore, BrandScoreEntity } from 'src/entities/brandScore.entity';
 import { LicenseInterceptor } from 'src/interceptors/license.interceptor';
 import { SearchQueryDTO } from './dto/searchQuery.dto';
 import { RankingService } from './ranking.service';
 
+@ApiTags('ranking')
 @Controller('ranking')
+@ApiExtraModels(LicensedDTO, BrandScore)
 export class RankingController {
   readonly #rankingService: RankingService;
 
@@ -14,6 +18,8 @@ export class RankingController {
   }
 
   @Get()
+  // @SearchQuerySchema()
+  @LicensedDTODecorator([BrandScore])
   @UseInterceptors(LicenseInterceptor)
   async all(@Query() query: SearchQueryDTO): Promise<BrandScoreEntity[]> {
     const yearMonth =

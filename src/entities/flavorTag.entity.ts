@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({
@@ -12,4 +13,12 @@ export class FlavorTagEntity {
 
   @Column()
   readonly tag!: string;
+}
+
+export class FlavorTag extends FlavorTagEntity{
+  @ApiProperty({ example: '2' })
+  id: number;
+
+  @ApiProperty({ example: '酸味' })
+  tag: string;
 }

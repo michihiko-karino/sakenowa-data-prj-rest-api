@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger/dist/decorators';
 import {
   Column,
   CreateDateColumn,
@@ -8,8 +9,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { AreaEntity } from './area.entity';
-import { BrandEntity } from './brand.entity';
+import { Area, AreaEntity } from './area.entity';
+import { BrandEntity, OnlyBrand } from './brand.entity';
 
 @Entity({
   name: 'brand_score',
@@ -40,4 +41,24 @@ export class BrandScoreEntity {
   @OneToOne(() => BrandEntity, (brand) => brand.id)
   @JoinColumn()
   readonly brand!: BrandEntity;
+}
+
+export class BrandScore extends BrandScoreEntity {
+  @ApiProperty({ example: '202009' })
+  yearMonth: string;
+
+  @ApiProperty({ type: Area })
+  area: AreaEntity;
+
+  @ApiProperty({ example: '4.41221904754639' })
+  score: number;
+
+  @ApiProperty({ example: '1' })
+  allRank?: number;
+
+  @ApiProperty({ example: '1' })
+  areaRank?: number;
+
+  @ApiProperty({ type: OnlyBrand })
+  brand: BrandEntity;
 }

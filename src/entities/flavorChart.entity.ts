@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -39,4 +40,27 @@ export class FlavorChartEntity {
 
   @Column('double')
   readonly light!: number;
+}
+
+export class FlavorChart extends FlavorChartEntity {
+  @ApiProperty({ example: '1' })
+  id: number;
+
+  @ApiProperty({ example: '0.530785420673603' })
+  fruity: number;
+
+  @ApiProperty({ example: '0.422885095022818' })
+  mellow: number;
+
+  @ApiProperty({ example: '0.280154068716765' })
+  rich: number;
+
+  @ApiProperty({ example: '0.301877237796703' })
+  soft: number;
+
+  @ApiProperty({ example: '0.237384379935496' })
+  dry: number;
+
+  @ApiProperty({ example: '0.559881702551713' })
+  light: number;
 }
